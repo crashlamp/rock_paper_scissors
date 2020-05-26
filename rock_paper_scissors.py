@@ -60,6 +60,7 @@ class Game:
         print("Game over!")
 
 
+
 if __name__ == '__main__':
     game = Game(Player(), RandomPlayer())
     game.play_game()
