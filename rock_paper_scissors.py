@@ -42,23 +42,44 @@ class Game:
         self.p2 = p2
         self.score_p1 = 0
         self.score_p2 = 0
+        self.round = 0
 
     def play_round(self):
+        self.round += 1
         move1 = self.p1.move()
         move2 = self.p2.move()
         if self.beats(move1, move2)
             self.score_p1 += 1
-            print(f"You played: {move1}  \nYour opponent played: {move2}")
-            self.p1.learn(move1, move2)
-            self.p2.learn(move2, move1)
+            winner = print(f"* * * PLAYER ONE WINS ROUND {self.round}! * * *")
+        elif self.beats(move2, move1)
+            self.score_p2 += 1
+            winner = print(f"* * * PLAYER TWO WINS ROUND {self.round}! * * *")
+        else:
+            winner = "* * * TIE! * * *"
+        print(
+            f"> You played: {move1}"
+            f"\n> Opponent played: {move2}"
+            f"\n\n{winner}"
+            f"\nThe score is"
+            f"\nPlayer One: {self.score_p1}\tPlayer Two: {self.score_p2}"
+        )
+        self.p1.learn(move1, move2)
+        self.p2.learn(move2, move1)
 
     def play_game(self):
-        print("Game start!")
+        print("Starting Game!")
         for round in range(3):
             print(f"Round {round + 1}:")
             self.play_round()
+        while True:
+            if self.score_p1 == self.score_p2:
+                print("* * * TIEBREAKER! * * *")
+                self.play_round()
+        if self.score_p1 > self.score_p2:
+            print("* * * YOU HAVE WON THE GAME! * * *")
+        else:
+            print("* * * YOU HAVE BEEN DEFEATED! * * *")
         print("Game over!")
-
 
 
 if __name__ == '__main__':
