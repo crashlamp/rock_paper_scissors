@@ -19,16 +19,9 @@ class Player:
                 return move
 
 
-
     def learn(self, my_move, their_move):
         self.my_move = my_move
         self.their_move = their_move
-
-
-def beats(one, two):
-    return ((one == 'rock' and two == 'scissors') or
-            (one == 'scissors' and two == 'paper') or
-            (one == 'paper' and two == 'rock'))
 
 
 class RandomPlayer(Player):
@@ -44,18 +37,24 @@ class Game:
         self.score_p2 = 0
         self.round = 0
 
+    def beats(self, one, two):
+        return ((one == 'rock' and two == 'scissors') or
+                (one == 'scissors' and two == 'paper') or
+                (one == 'paper' and two == 'rock'))
+
+
     def play_round(self):
         self.round += 1
         move1 = self.p1.move()
         move2 = self.p2.move()
-        if self.beats(move1, move2)
+        if self.beats(move1, move2):
             self.score_p1 += 1
-            winner = print(f"* * * PLAYER ONE WINS ROUND {self.round}! * * *")
-        elif self.beats(move2, move1)
+            winner = f"* * * PLAYER ONE WINS ROUND {self.round}! * * *\n"
+        elif self.beats(move2, move1):
             self.score_p2 += 1
-            winner = print(f"* * * PLAYER TWO WINS ROUND {self.round}! * * *")
+            winner = f"* * * PLAYER TWO WINS ROUND {self.round}! * * *\n"
         else:
-            winner = "* * * TIE! * * *"
+            winner = "* * * TIE! * * *\n"
         print(
             f"> You played: {move1}"
             f"\n> Opponent played: {move2}"
@@ -75,11 +74,14 @@ class Game:
             if self.score_p1 == self.score_p2:
                 print("* * * TIEBREAKER! * * *")
                 self.play_round()
-        if self.score_p1 > self.score_p2:
-            print("* * * YOU HAVE WON THE GAME! * * *")
-        else:
-            print("* * * YOU HAVE BEEN DEFEATED! * * *")
-        print("Game over!")
+            elif self.score_p1 > self.score_p2:
+                print("* * * YOU HAVE WON THE GAME! * * *")
+                print("Game over!\n\n")
+                game.play_game()
+            else:
+                print("* * * YOU HAVE BEEN DEFEATED! * * *")
+                print("Game over!\n\n")
+                game.play_game()
 
 
 if __name__ == '__main__':
